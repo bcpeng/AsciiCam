@@ -21,9 +21,8 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 /**
- * A button designed to be used for the on-screen shutter button.
- * It's currently an {@code ImageView} that can call a delegate when the
- * pressed state changes.
+ * A button designed to be used for the on-screen shutter button. It's currently an {@code
+ * ImageView} that can call a delegate when the pressed state changes.
  */
 public class ShutterButton extends ImageView {
     /**
@@ -36,6 +35,7 @@ public class ShutterButton extends ImageView {
          * @param pressed The ShutterButton that was pressed.
          */
         void onShutterButtonFocus(boolean pressed);
+
         void onShutterButtonClick();
     }
 
@@ -51,9 +51,8 @@ public class ShutterButton extends ImageView {
     }
 
     /**
-     * Hook into the drawable state changing to get changes to isPressed -- the
-     * onPressed listener doesn't always get called when the pressed state
-     * changes.
+     * Hook into the drawable state changing to get changes to isPressed -- the onPressed listener
+     * doesn't always get called when the pressed state changes.
      */
     @Override
     protected void drawableStateChanged() {

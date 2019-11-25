@@ -8,7 +8,7 @@ import android.util.Log;
 /**
  * Processes inputs on a separate thread and makes callbacks with the results.
  */
-public class AsyncProcessor<IN, OUT>  {
+public class AsyncProcessor<IN, OUT> {
 
     private final static boolean DEBUG = false;
     private static final String TAG = "AsyncProcessor";
@@ -23,9 +23,11 @@ public class AsyncProcessor<IN, OUT>  {
     public interface Producer<IN, OUT> {
         OUT processInput(IN input);
     }
+
     public interface SuccessCallback<IN, OUT> {
         void handleResult(IN input, OUT output);
     }
+
     public interface ErrorCallback<IN> {
         void handleException(IN input, Exception exception);
     }
@@ -50,15 +52,22 @@ public class AsyncProcessor<IN, OUT>  {
             throw new IllegalStateException("Can't start AsyncProcessor, its status is " + status);
         }
         thread = new Thread() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 Looper.prepare();
                 looper = Looper.myLooper();
-                if (DEBUG) Log.i("AsyncProcessor", "Looper: " + looper);
+                if (DEBUG) {
+                    Log.i("AsyncProcessor", "Looper: " + looper);
+                }
                 handler = new Handler();
                 // FIXME: This never gets called, so status stays BUSY.
                 Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
-                    @Override public boolean queueIdle() {
-                        if (DEBUG) Log.i(TAG, "AsyncProcessor got queueIdle notification, status=" + status);
+                    @Override
+                    public boolean queueIdle() {
+                        if (DEBUG) {
+                            Log.i(TAG,
+                                    "AsyncProcessor got queueIdle notification, status=" + status);
+                        }
                         if (status == Status.BUSY) {
                             status = Status.IDLE;
                         }
@@ -66,7 +75,9 @@ public class AsyncProcessor<IN, OUT>  {
                     }
                 });
                 Looper.loop();
-                if (DEBUG) Log.i("Looper", "Exiting looper thread");
+                if (DEBUG) {
+                    Log.i("Looper", "Exiting looper thread");
+                }
             }
         };
         thread.start();
@@ -74,9 +85,9 @@ public class AsyncProcessor<IN, OUT>  {
     }
 
     /**
-     * Calls the {@code producer} function on {@code input}. If successful, invokes
-     * {@code successCallback} on {@code callbackHandler}, which is normally owned by the thread
-     * that called this method. If an exception occurs, invokes {@code errorCallback} instead.
+     * Calls the {@code producer} function on {@code input}. If successful, invokes {@code
+     * successCallback} on {@code callbackHandler}, which is normally owned by the thread that
+     * called this method. If an exception occurs, invokes {@code errorCallback} instead.
      *
      * If called when this thread is already executing another request, then this request will be
      * queued and executed first-in first-out.
@@ -90,24 +101,30 @@ public class AsyncProcessor<IN, OUT>  {
         }
         status = Status.BUSY;
         handler.post(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 try {
-                    if (DEBUG) Log.i(TAG, "Calling processInput on AsyncProcessor thread");
+                    if (DEBUG) {
+                        Log.i(TAG, "Calling processInput on AsyncProcessor thread");
+                    }
                     final OUT result = producer.processInput(input);
                     if (successCallback != null) {
-                        if (DEBUG) Log.i(TAG, "Produced output, calling success callback");
+                        if (DEBUG) {
+                            Log.i(TAG, "Produced output, calling success callback");
+                        }
                         callbackHandler.post(new Runnable() {
-                            @Override public void run() {
+                            @Override
+                            public void run() {
                                 successCallback.handleResult(input, result);
                             }
                         });
                     }
-                }
-                catch (final Exception ex) {
+                } catch (final Exception ex) {
                     Log.e(TAG, "Exception producing output", ex);
                     if (errorCallback != null) {
                         callbackHandler.post(new Runnable() {
-                            @Override public void run() {
+                            @Override
+                            public void run() {
                                 errorCallback.handleException(input, ex);
                             }
                         });

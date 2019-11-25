@@ -1,0 +1,60 @@
+{
+  "variant": {
+    "module": {
+      "rootBuildGradleFolder": "/Users/bc.peng/myWorkspace/Android/otherExamples/AsciiCam",
+      "sdkFolder": "/Users/bc.peng/Android/SDK",
+      "isNativeCompilerSettingsCacheEnabled": false,
+      "isBuildOnlyTargetAbiEnabled": true,
+      "splitsAbiFilterSet": [],
+      "intermediatesFolder": "/Users/bc.peng/myWorkspace/Android/otherExamples/AsciiCam/app/build/intermediates",
+      "gradleModulePathName": ":app",
+      "moduleRootFolder": "/Users/bc.peng/myWorkspace/Android/otherExamples/AsciiCam/app",
+      "makeFile": "/Users/bc.peng/myWorkspace/Android/otherExamples/AsciiCam/app/src/main/jni/Android.mk",
+      "buildSystem": "NDK_BUILD",
+      "compilerSettingsCacheFolder": "/Users/bc.peng/myWorkspace/Android/otherExamples/AsciiCam/.cxx",
+      "cxxFolder": "/Users/bc.peng/myWorkspace/Android/otherExamples/AsciiCam/app/.cxx",
+      "ndkFolder": "/Users/bc.peng/Android/SDK/ndk/20.1.5948944",
+      "ndkVersion": "20.1.5948944",
+      "ndkSupportedAbiList": [
+        "ARMEABI_V7A",
+        "ARM64_V8A",
+        "X86",
+        "X86_64"
+      ],
+      "ndkDefaultAbiList": [
+        "ARMEABI_V7A",
+        "ARM64_V8A",
+        "X86",
+        "X86_64"
+      ],
+      "cmakeToolchainFile": "."
+    },
+    "buildSystemArgumentList": [],
+    "cFlagList": [],
+    "cppFlagsList": [],
+    "variantName": "release",
+    "soFolder": "/Users/bc.peng/myWorkspace/Android/otherExamples/AsciiCam/app/build/intermediates/ndkBuild/release/lib",
+    "objFolder": "/Users/bc.peng/myWorkspace/Android/otherExamples/AsciiCam/app/build/intermediates/ndkBuild/release/obj/local",
+    "jsonFolder": "/Users/bc.peng/myWorkspace/Android/otherExamples/AsciiCam/app/.cxx/ndkBuild/release",
+    "gradleBuildOutputFolder": "/Users/bc.peng/myWorkspace/Android/otherExamples/AsciiCam/app/.cxx/cxx/release",
+    "isDebuggableEnabled": false,
+    "validAbiList": [
+      "ARMEABI_V7A",
+      "ARM64_V8A",
+      "X86",
+      "X86_64"
+    ],
+    "buildTargetSet": []
+  },
+  "abi": "ARM64_V8A",
+  "abiPlatformVersion": 16,
+  "cxxBuildFolder": "/Users/bc.peng/myWorkspace/Android/otherExamples/AsciiCam/app/.cxx/ndkBuild/release/arm64-v8a",
+  "jsonFile": "/Users/bc.peng/myWorkspace/Android/otherExamples/AsciiCam/app/.cxx/ndkBuild/release/arm64-v8a/android_gradle_build.json",
+  "gradleBuildOutputFolder": "/Users/bc.peng/myWorkspace/Android/otherExamples/AsciiCam/app/.cxx/cxx/release/arm64-v8a",
+  "objFolder": "/Users/bc.peng/myWorkspace/Android/otherExamples/AsciiCam/app/build/intermediates/ndkBuild/release/obj/local/arm64-v8a",
+  "buildCommandFile": "/Users/bc.peng/myWorkspace/Android/otherExamples/AsciiCam/app/.cxx/ndkBuild/release/arm64-v8a/build_command.txt",
+  "buildOutputFile": "/Users/bc.peng/myWorkspace/Android/otherExamples/AsciiCam/app/.cxx/ndkBuild/release/arm64-v8a/build_output.txt",
+  "modelOutputFile": "/Users/bc.peng/myWorkspace/Android/otherExamples/AsciiCam/app/.cxx/ndkBuild/release/arm64-v8a/build_model.json",
+  "jsonGenerationLoggingRecordFile": "/Users/bc.peng/myWorkspace/Android/otherExamples/AsciiCam/app/.cxx/ndkBuild/release/arm64-v8a/json_generation_record.json",
+  "compileCommandsJsonFile": "/Users/bc.peng/myWorkspace/Android/otherExamples/AsciiCam/app/.cxx/ndkBuild/release/arm64-v8a/compile_commands.json"
+}

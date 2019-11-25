@@ -33,8 +33,7 @@ public class ImageLibrary {
                 if (nestedFile.isFile()) {
                     paths.add(nestedFile.getAbsolutePath());
                 }
-            }
-            else if (f.isFile() && fn.endsWith(".png")) {
+            } else if (f.isFile() && fn.endsWith(".png")) {
                 paths.add(f.getAbsolutePath());
             }
         }

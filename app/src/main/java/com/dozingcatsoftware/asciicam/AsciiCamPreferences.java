@@ -18,7 +18,8 @@ public class AsciiCamPreferences extends PreferenceActivity {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
 
-        Preference autoConvertPref = getPreferenceManager().findPreference(getString(R.string.autoConvertPicturesPrefId));
+        Preference autoConvertPref = getPreferenceManager().findPreference(
+                getString(R.string.autoConvertPicturesPrefId));
         autoConvertPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference pref, Object value) {
@@ -39,20 +40,19 @@ public class AsciiCamPreferences extends PreferenceActivity {
     }
 
     /**
-     * Sets whether pictures saved by the camera app (or other apps which broadcast the appropriate intent)
-     * should automatically be converted to ascii via the NewPictureReceiver broadcast receiver.
+     * Sets whether pictures saved by the camera app (or other apps which broadcast the appropriate
+     * intent) should automatically be converted to ascii via the NewPictureReceiver broadcast
+     * receiver.
      */
     public static void setAutoConvertEnabled(Context context, boolean enabled) {
         // For N and above, schedule or cancel a JobService.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             if (enabled) {
                 NewPictureJob.scheduleJob(context);
-            }
-            else {
+            } else {
                 NewPictureJob.cancelJob(context);
             }
-        }
-        else {
+        } else {
             boolean receiverEnabled = false;
             boolean legacyReceiverEnabled = false;
             if (enabled) {
@@ -63,8 +63,7 @@ public class AsciiCamPreferences extends PreferenceActivity {
                     // receiver to enable based on whether the ACTION_NEW_PICTURE field exists.
                     android.hardware.Camera.class.getField("ACTION_NEW_PICTURE");
                     receiverEnabled = true;
-                }
-                catch(Exception ex) {
+                } catch (Exception ex) {
                     legacyReceiverEnabled = true;
                 }
             }
@@ -73,7 +72,8 @@ public class AsciiCamPreferences extends PreferenceActivity {
                     receiverEnabled ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED
                             : PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                     PackageManager.DONT_KILL_APP);
-            pm.setComponentEnabledSetting(new ComponentName(context, NewPictureReceiverLegacyBroadcast.class),
+            pm.setComponentEnabledSetting(
+                    new ComponentName(context, NewPictureReceiverLegacyBroadcast.class),
                     legacyReceiverEnabled ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED
                             : PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                     PackageManager.DONT_KILL_APP);

@@ -19,7 +19,8 @@ public class AsciiImageWriter {
 
     DateFormat filenameDateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 
-    String basePictureDirectory = Environment.getExternalStorageDirectory() + File.separator + "AsciiCam";
+    String basePictureDirectory =
+            Environment.getExternalStorageDirectory() + File.separator + "AsciiCam";
 
     public String getBasePictureDirectory() {
         return basePictureDirectory;
@@ -29,7 +30,8 @@ public class AsciiImageWriter {
         return basePictureDirectory + File.separator + "thumbnails";
     }
 
-    public String saveImageAndThumbnail(Bitmap image, Bitmap thumbnail, AsciiConverter.Result asciiResult)
+    public String saveImageAndThumbnail(Bitmap image, Bitmap thumbnail,
+            AsciiConverter.Result asciiResult)
             throws IOException {
         String datestr = filenameDateFormat.format(new Date());
         String dir = getBasePictureDirectory();
@@ -44,8 +46,7 @@ public class AsciiImageWriter {
         FileWriter htmlOutput = new FileWriter(htmlPath);
         try {
             writeHtml(asciiResult, htmlOutput, datestr);
-        }
-        finally {
+        } finally {
             htmlOutput.close();
         }
 
@@ -53,12 +54,11 @@ public class AsciiImageWriter {
         FileWriter textOutput = new FileWriter(textPath);
         try {
             writeText(asciiResult, textOutput, datestr);
-        }
-        finally {
+        } finally {
             textOutput.close();
         }
 
-        if (thumbnail!=null) {
+        if (thumbnail != null) {
             String thumbnailDir = getThumbnailDirectory();
             (new File(thumbnailDir)).mkdirs();
             // create .noindex file so thumbnail pictures won't be indexed and show up in the gallery app
@@ -78,29 +78,32 @@ public class AsciiImageWriter {
             output = new FileOutputStream(outputFilePath);
             bitmap.compress(Bitmap.CompressFormat.PNG, 0, output);
             output.close();
-        }
-        finally {
-            if (output!=null) output.close();
+        } finally {
+            if (output != null) {
+                output.close();
+            }
         }
         return outputFilePath;
     }
 
-    public void writeHtml(AsciiConverter.Result result, Writer writer, String imageName) throws IOException {
+    public void writeHtml(AsciiConverter.Result result, Writer writer, String imageName)
+            throws IOException {
         // backgroundColor always has the high bits set for alpha, so toHexString() will be 8 characters.
-        String backgroundColor = "#" + Integer.toHexString(result.backgroundColor()).substring(2, 8);
+        String backgroundColor = "#" + Integer.toHexString(result.backgroundColor()).substring(2,
+                8);
 
         writer.write("<html><head><title>Ascii Picture " + imageName + "</title></head>");
         writer.write("<body style=\"background:" + backgroundColor + "\">" +
-                     "<div style=\"background:" + backgroundColor + "; letter-spacing:3px;\">\n");
+                "<div style=\"background:" + backgroundColor + "; letter-spacing:3px;\">\n");
 
         writer.write("<pre>");
-        for(int r=0; r<result.rows; r++) {
+        for (int r = 0; r < result.rows; r++) {
             boolean hasSetColor = false;
             int lastColor = 0;
             // loop precondition: output is in the middle of a <span> tag.
             // This allows skipping the tag if it's a space or the same color as previous char.
             writer.write("<span>");
-            for(int c=0; c<result.columns; c++) {
+            for (int c = 0; c < result.columns; c++) {
                 String asciiChar = result.stringAtRowColumn(r, c);
                 // don't use span tag for space
                 if (" ".equals(asciiChar)) {
@@ -108,7 +111,7 @@ public class AsciiImageWriter {
                     continue;
                 }
                 int color = result.colorAtRowColumn(r, c);
-                if (hasSetColor && color==lastColor) {
+                if (hasSetColor && color == lastColor) {
                     writer.write(asciiChar);
                     continue;
                 }
@@ -118,7 +121,8 @@ public class AsciiImageWriter {
                 }
                 lastColor = color;
                 hasSetColor = true;
-                writer.write(String.format("</span><span style=\"color:%s\">%s", htmlColor, asciiChar));
+                writer.write(
+                        String.format("</span><span style=\"color:%s\">%s", htmlColor, asciiChar));
             }
             writer.write("</span>\n");
         }
@@ -126,9 +130,10 @@ public class AsciiImageWriter {
         writer.write("</div></body></html>");
     }
 
-    public void writeText(AsciiConverter.Result result, Writer writer, String imageName) throws IOException {
-        for(int r=0; r<result.rows; r++) {
-            for(int c=0; c<result.columns; c++) {
+    public void writeText(AsciiConverter.Result result, Writer writer, String imageName)
+            throws IOException {
+        for (int r = 0; r < result.rows; r++) {
+            for (int c = 0; c < result.columns; c++) {
                 writer.write(result.stringAtRowColumn(r, c));
             }
             writer.write("\n");

@@ -7,11 +7,12 @@ import android.os.Build;
 import android.util.Log;
 
 /**
- * Receiver for the Camera.ACTION_NEW_PICTURE broadcast message sent when the camera app saves
- * a new picture. Calls ProcessImageOperation to create an ASCII version of the picture.
+ * Receiver for the Camera.ACTION_NEW_PICTURE broadcast message sent when the camera app saves a new
+ * picture. Calls ProcessImageOperation to create an ASCII version of the picture.
  */
 public class NewPictureReceiver extends BroadcastReceiver {
-    @Override public void onReceive(Context context, Intent intent) {
+    @Override
+    public void onReceive(Context context, Intent intent) {
         // On Android N and later we use a JobService and shouldn't get this notification.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             return;
@@ -19,8 +20,7 @@ public class NewPictureReceiver extends BroadcastReceiver {
         Log.i(getClass().getName(), "Got picture: " + intent.getData());
         try {
             (new ProcessImageOperation()).processImage(context, intent.getData());
-        }
-        catch(Exception ex) {
+        } catch (Exception ex) {
             Log.e(getClass().getName(), "Error saving picture", ex);
         }
     }

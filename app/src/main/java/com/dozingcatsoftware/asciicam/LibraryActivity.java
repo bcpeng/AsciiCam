@@ -8,9 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.dozingcatsoftware.util.AsyncImageLoader;
-import com.dozingcatsoftware.util.ScaledBitmapCache;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -23,9 +20,12 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 
+import com.dozingcatsoftware.util.AsyncImageLoader;
+import com.dozingcatsoftware.util.ScaledBitmapCache;
+
 /**
- * Activity which displays all pictures the user has taken in a scrolling grid. Selecting an image opens it
- * in a ViewImageActivity.
+ * Activity which displays all pictures the user has taken in a scrolling grid. Selecting an image
+ * opens it in a ViewImageActivity.
  */
 public class LibraryActivity extends Activity {
 
@@ -43,7 +43,8 @@ public class LibraryActivity extends Activity {
     ScaledBitmapCache bitmapCache;
     AsyncImageLoader imageLoader = new AsyncImageLoader();
 
-    public static Intent intentWithImageDirectory(Context parent, String imageDirectory, String thumbnailDirectory) {
+    public static Intent intentWithImageDirectory(Context parent, String imageDirectory,
+            String thumbnailDirectory) {
         Intent intent = new Intent(parent, LibraryActivity.class);
         intent.putExtra("imageDirectory", imageDirectory);
         intent.putExtra("thumbnailDirectory", thumbnailDirectory);
@@ -83,13 +84,14 @@ public class LibraryActivity extends Activity {
     void displayGrid() {
         SimpleAdapter adapter = new SimpleAdapter(this, imageMaps,
                 R.layout.library_cell,
-                new String[] {IMAGE_URI_KEY},
-                new int[] {R.id.grid_image});
+                new String[]{IMAGE_URI_KEY},
+                new int[]{R.id.grid_image});
         adapter.setViewBinder(new SimpleAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Object data, String textRepresentation) {
-                Uri imageUri = (Uri)data;
-                imageLoader.loadImageIntoViewAsync(bitmapCache, imageUri, (ImageView)view, CELL_WIDTH, CELL_HEIGHT, getResources());
+                Uri imageUri = (Uri) data;
+                imageLoader.loadImageIntoViewAsync(bitmapCache, imageUri, (ImageView) view,
+                        CELL_WIDTH, CELL_HEIGHT, getResources());
                 return true;
             }
         });
@@ -97,7 +99,7 @@ public class LibraryActivity extends Activity {
 
         // show text message if no images available
         View noImagesView = findViewById(R.id.noImagesTextView);
-        noImagesView.setVisibility(imageMaps.size()>0 ? View.GONE : View.VISIBLE);
+        noImagesView.setVisibility(imageMaps.size() > 0 ? View.GONE : View.VISIBLE);
     }
 
     @Override

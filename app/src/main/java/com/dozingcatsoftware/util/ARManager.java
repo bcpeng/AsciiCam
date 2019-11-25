@@ -8,9 +8,10 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 /**
- * This class handles initializing, starting, and stopping the camera. An Activity using this class must provide the
- * SurfaceView that the camera preview will draw into, and a Camera.PreviewCallback to process the data for each
- * preview frame. It also needs to call startCamera() and stopCamera() when needed, such as in onResume and onPause.
+ * This class handles initializing, starting, and stopping the camera. An Activity using this class
+ * must provide the SurfaceView that the camera preview will draw into, and a Camera.PreviewCallback
+ * to process the data for each preview frame. It also needs to call startCamera() and stopCamera()
+ * when needed, such as in onResume and onPause.
  */
 public class ARManager implements SurfaceHolder.Callback {
 
@@ -26,7 +27,8 @@ public class ARManager implements SurfaceHolder.Callback {
     int preferredPreviewWidth = 0, preferredPreviewHeight = 0;
     int numPreviewCallbackBuffers = 0;
 
-    public ARManager(Activity _activity, SurfaceView _cameraView, Camera.PreviewCallback _previewCallback) {
+    public ARManager(Activity _activity, SurfaceView _cameraView,
+            Camera.PreviewCallback _previewCallback) {
         this.activity = _activity;
         this.cameraView = _cameraView;
         this.previewCallback = _previewCallback;
@@ -37,7 +39,8 @@ public class ARManager implements SurfaceHolder.Callback {
         cameraView.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
     }
 
-    public static ARManager createAndSetupCameraView(Activity _activity, SurfaceView _cameraView, Camera.PreviewCallback _previewCallback) {
+    public static ARManager createAndSetupCameraView(Activity _activity, SurfaceView _cameraView,
+            Camera.PreviewCallback _previewCallback) {
         ARManager manager = new ARManager(_activity, _cameraView, _previewCallback);
         manager.setupCameraView();
         return manager;
@@ -57,33 +60,32 @@ public class ARManager implements SurfaceHolder.Callback {
     }
 
     public boolean startCamera() {
-        if (camera==null) {
+        if (camera == null) {
             try {
                 camera = CameraUtils.openCamera(cameraId);
-                if (cameraOpenedCallback!=null) {
+                if (cameraOpenedCallback != null) {
                     cameraOpenedCallback.run();
                 }
                 camera.setPreviewDisplay(cameraView.getHolder());
-                if (preferredPreviewWidth>0 && preferredPreviewHeight>0) {
-                    CameraUtils.setNearestCameraPreviewSize(camera, preferredPreviewWidth, preferredPreviewHeight);
+                if (preferredPreviewWidth > 0 && preferredPreviewHeight > 0) {
+                    CameraUtils.setNearestCameraPreviewSize(camera, preferredPreviewWidth,
+                            preferredPreviewHeight);
                 }
 
                 if (numPreviewCallbackBuffers > 0) {
-                    CameraUtils.createPreviewCallbackBuffers(camera, this.numPreviewCallbackBuffers);
+                    CameraUtils.createPreviewCallbackBuffers(camera,
+                            this.numPreviewCallbackBuffers);
                     CameraUtils.setPreviewCallbackWithBuffer(camera, this.previewCallback);
-                }
-                else {
+                } else {
                     camera.setPreviewCallback(this.previewCallback);
                 }
                 camera.startPreview();
-            }
-            catch(Exception ex) {
+            } catch (Exception ex) {
                 camera = null;
             }
         }
-        return (camera!=null);
+        return (camera != null);
     }
-
 
     public void startCameraIfVisible() {
         if (cameraViewReady) {
@@ -92,7 +94,7 @@ public class ARManager implements SurfaceHolder.Callback {
     }
 
     public void stopCamera() {
-        if (camera!=null) {
+        if (camera != null) {
             camera.setPreviewCallback(null);
             camera.stopPreview();
             camera.release();
@@ -101,7 +103,7 @@ public class ARManager implements SurfaceHolder.Callback {
     }
 
     public void switchToCamera(int _cameraId) {
-        if (camera!=null) {
+        if (camera != null) {
             stopCamera();
         }
         this.cameraId = _cameraId;
@@ -138,10 +140,10 @@ public class ARManager implements SurfaceHolder.Callback {
         stopCamera();
     }
 
-
     public Camera getCamera() {
         return camera;
     }
+
     public int getCameraId() {
         return cameraId;
     }

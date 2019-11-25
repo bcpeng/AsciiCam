@@ -29,7 +29,7 @@ public class NewPictureJob extends JobService {
             = MediaStore.Images.Media.EXTERNAL_CONTENT_URI.getPathSegments();
 
     // The columns we want to retrieve about a particular image.
-    static final String[] PROJECTION = new String[] {
+    static final String[] PROJECTION = new String[]{
             MediaStore.Images.ImageColumns._ID, MediaStore.Images.ImageColumns.DATA
     };
     static final int PROJECTION_ID = 0;
@@ -45,7 +45,8 @@ public class NewPictureJob extends JobService {
 
     final Handler handler = new Handler();
     final Runnable worker = new Runnable() {
-        @Override public void run() {
+        @Override
+        public void run() {
             scheduleJob(NewPictureJob.this);
             jobFinished(jobParams, false);
         }
@@ -71,7 +72,7 @@ public class NewPictureJob extends JobService {
         if (jobs == null) {
             return false;
         }
-        for (int i=0; i<jobs.size(); i++) {
+        for (int i = 0; i < jobs.size(); i++) {
             if (jobs.get(i).getId() == JOB_ID) {
                 return true;
             }
@@ -89,18 +90,18 @@ public class NewPictureJob extends JobService {
     public boolean onStartJob(JobParameters params) {
         this.jobParams = params;
         final List<String> newImagePaths = new ArrayList<String>();
-        if (params.getTriggeredContentAuthorities() != null && params.getTriggeredContentUris() != null) {
+        if (params.getTriggeredContentAuthorities() != null &&
+                params.getTriggeredContentUris() != null) {
             // If we have details about which URIs changed, then iterate through them
             // and collect either the ids that were impacted or note that a generic
             // change has happened.
             ArrayList<String> ids = new ArrayList<String>();
             for (Uri uri : params.getTriggeredContentUris()) {
                 List<String> path = uri.getPathSegments();
-                if (path != null && path.size() == EXTERNAL_PATH_SEGMENTS.size()+1) {
+                if (path != null && path.size() == EXTERNAL_PATH_SEGMENTS.size() + 1) {
                     // This is a specific file.
-                    ids.add(path.get(path.size()-1));
-                }
-                else {
+                    ids.add(path.get(path.size() - 1));
+                } else {
                     // Oops, there is some general change!
                 }
             }
@@ -109,7 +110,7 @@ public class NewPictureJob extends JobService {
                 // If we found some ids that changed, we want to determine what they are.
                 // First, we do a query with content provider to ask about all of them.
                 StringBuilder selection = new StringBuilder();
-                for (int i=0; i<ids.size(); i++) {
+                for (int i = 0; i < ids.size(); i++) {
                     if (selection.length() > 0) {
                         selection.append(" OR ");
                     }
@@ -135,8 +136,7 @@ public class NewPictureJob extends JobService {
                     }
                 } catch (SecurityException e) {
                     Log.e("NewPictureJob", "Error accessing media", e);
-                }
-                finally {
+                } finally {
                     if (cursor != null) {
                         cursor.close();
                     }
@@ -147,13 +147,13 @@ public class NewPictureJob extends JobService {
             if (newImagePaths.size() > 0) {
                 // Use a thread rather than an AsyncTask since AsyncTasks are serialized.
                 (new Thread(new Runnable() {
-                    @Override public void run() {
+                    @Override
+                    public void run() {
                         processImagePaths(newImagePaths);
                     }
                 })).start();
             }
-        }
-        finally {
+        } finally {
             handler.postDelayed(worker, 1);
         }
         return true;
@@ -175,8 +175,7 @@ public class NewPictureJob extends JobService {
         for (String path : imagePaths) {
             try {
                 (new ProcessImageOperation()).processImage(this, Uri.fromFile(new File(path)));
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 Log.e("NewPictureJob", "Failed to process image", ex);
             }
         }

@@ -26,7 +26,7 @@ public class PermissionsChecker {
 
     public static void requestCameraAndStoragePermissions(Activity activity) {
         activity.requestPermissions(
-                new String[] {
+                new String[]{
                         Manifest.permission.CAMERA,
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -36,7 +36,7 @@ public class PermissionsChecker {
 
     public static void requestStoragePermissionsToTakePhoto(Activity activity) {
         activity.requestPermissions(
-                new String[] {
+                new String[]{
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 },
@@ -45,7 +45,7 @@ public class PermissionsChecker {
 
     public static void requestStoragePermissionsToGoToLibrary(Activity activity) {
         activity.requestPermissions(
-                new String[] {
+                new String[]{
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 },
