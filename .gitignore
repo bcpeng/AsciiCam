@@ -3,6 +3,7 @@
 .gradle/
 app/.externalNativeBuild/
 app/release/
+app/.cxx/
 build/
 gen/
 local.properties
